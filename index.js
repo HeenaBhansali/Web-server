@@ -1,10 +1,18 @@
 const http = require("http")
 
+const users = require("./fixtures/users")
+const emails = require("./fixtures/emails")
+
 const server = http.createServer((req, res) => {
-  console.log("request", req)
-  console.log("response", res)
   const route = req.method + " " + req.url
-  res.end("You asked for " + route)
+
+  if (route === "GET /users") {
+    res.end(JSON.stringify(users))
+  } else if (route === "GET /emails") {
+    res.end(JSON.stringify(emails))
+  } else {
+    res.end("You asked for " + route)
+  }
 })
 
 server.listen(3000)
