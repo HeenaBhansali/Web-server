@@ -12,21 +12,11 @@ const getEmailsRoute = (req, res) => {
   res.send(emails)
 }
 
-const routes = {
-  "GET /users": getUsersRoute,
-  "GET /emails": getEmailsRoute
-}
+const router = express.Router()
 
-const noRouteFound = (req, res) => {
-  const route = req.method + " " + req.url
-  res.end("You asked for " + route)
-}
+router.get("/users", getUsersRoute)
+router.get("/emails", getEmailsRoute)
 
-app.use((req, res) => {
-  const route = req.method + " " + req.url
-  const handler = routes[route] || noRouteFound
-
-  handler(req, res)
-})
+app.use(router)
 
 app.listen(3000)
