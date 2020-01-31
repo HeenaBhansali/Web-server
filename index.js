@@ -1,18 +1,27 @@
-const http = require("http")
-
+const express = require("express")
 const users = require("./fixtures/users")
 const emails = require("./fixtures/emails")
 
-const server = http.createServer((req, res) => {
-  const route = req.method + " " + req.url
+const app = express()
 
+const getUsersRoute = (req, res) => {
+  res.send(users)
+}
+
+const getEmailsRoute = (req, res) => {
+  res.send(emails)
+}
+
+app.use((req, res) => {
+  const route = req.method + " " + req.url
+  req.accepts("text/csv")
   if (route === "GET /users") {
-    res.end(JSON.stringify(users))
+    res.send(users)
   } else if (route === "GET /emails") {
-    res.end(JSON.stringify(emails))
+    res.send(emails)
   } else {
     res.end("You asked for " + route)
   }
 })
 
-server.listen(3000)
+app.listen(3000)
