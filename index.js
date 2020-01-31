@@ -12,16 +12,21 @@ const getEmailsRoute = (req, res) => {
   res.send(emails)
 }
 
+const routes = {
+  "GET /users": getUsersRoute,
+  "GET /emails": getEmailsRoute
+}
+
+const noRouteFound = (req, res) => {
+  const route = req.method + " " + req.url
+  res.end("You asked for " + route)
+}
+
 app.use((req, res) => {
   const route = req.method + " " + req.url
-  req.accepts("text/csv")
-  if (route === "GET /users") {
-    res.send(users)
-  } else if (route === "GET /emails") {
-    res.send(emails)
-  } else {
-    res.end("You asked for " + route)
-  }
+  const handler = routes[route] || noRouteFound
+
+  handler(req, res)
 })
 
 app.listen(3000)
