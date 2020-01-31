@@ -1,0 +1,20 @@
+{
+  "name": "pony-express",
+  "version": "1.0.0",
+  "description": "Web Server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Heena Bhansali",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HeenaBhansali/Web-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/HeenaBhansali/Web-server/issues"
+  },
+  "homepage": "https://github.com/HeenaBhansali/Web-server#readme"
+}
