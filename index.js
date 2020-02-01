@@ -30,14 +30,18 @@ const getEmailFrom = (req, res) => {
   res.send(email)
 }
 
-const router = express.Router()
+const usersRouter = express.Router()
 
-router.get("/users", getUsersRoute)
-router.get("/users/:id", getUserRoute)
-router.get("/emails", getEmailsRoute)
-router.get("/emails/:id", getEmailRoute)
-router.get("/emails/from/:sender/to/:recipient", getEmailFrom)
+usersRouter.get("/", getUsersRoute)
+usersRouter.get("/:id", getUserRoute)
 
-app.use(router)
+const emailsRouter = express.Router()
+
+emailsRouter.get("/", getEmailsRoute)
+emailsRouter.get("/:id", getEmailRoute)
+emailsRouter.get("/from/:sender/to/:recipient", getEmailFrom)
+
+app.use("/users", usersRouter)
+app.use("/emails", emailsRouter)
 
 app.listen(3000)
