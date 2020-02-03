@@ -36,6 +36,12 @@ const updateEmailRoute = async (req, res) => {
   res.send(email)
 }
 
+const deleteEmailRoute = async (req, res) => {
+  const index = emails.find(email => email.id === req.params.id)
+  emails.splice(index, 1)
+  res.sendStatus(204)
+}
+
 const emailsRouter = express.Router()
 
 emailsRouter.get("/", getEmailsRoute)
@@ -43,5 +49,6 @@ emailsRouter.get("/:id", getEmailRoute)
 emailsRouter.get("/from/:sender/to/:recipient", getEmailFrom)
 emailsRouter.post("/", createEmailRoute)
 emailsRouter.patch("/:id", updateEmailRoute)
+emailsRouter.delete("/:id", deleteEmailRoute)
 
 module.exports = emailsRouter
