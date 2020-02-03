@@ -1,7 +1,7 @@
 const express = require("express")
 const emails = require("../fixtures/emails")
 const generateId = require("../lib/generate-id")
-const jsonBodyParser = require("../lib/json-body-parser")
+const bodyParser = require("body-parser")
 
 class NotFound extends Error {
   constructor(message) {
@@ -55,12 +55,12 @@ const emailsRouter = express.Router()
 emailsRouter
   .route("/")
   .get(getEmailsRoute)
-  .post(jsonBodyParser, createEmailRoute)
+  .post(bodyParser.json(), createEmailRoute)
 
 emailsRouter
   .route("/:id")
   .get(getEmailRoute)
-  .patch(jsonBodyParser, updateEmailRoute)
+  .patch(bodyParser.json(), updateEmailRoute)
   .delete(deleteEmailRoute)
 
 emailsRouter.route("/from/:sender/to/:recipient").get(getEmailFrom)
