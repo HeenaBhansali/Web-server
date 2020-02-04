@@ -2,6 +2,10 @@ const express = require("express")
 const emails = require("../fixtures/emails")
 const generateId = require("../lib/generate-id")
 const bodyParser = require("body-parser")
+const path = require("path")
+const multer = require("multer")
+
+const upload = multer({ dest: path.join(__dirname, "../uploads") })
 
 class NotFound extends Error {
   constructor(message) {
@@ -31,7 +35,8 @@ const getEmailFrom = (req, res) => {
 }
 
 const createEmailRoute = async (req, res) => {
-  const newEmail = { id: generateId(), ...req.body }
+  const attachments = (req.files || []).map(file => "/uploads/" + file.filename)
+  const newEmail = { id: generateId(), ...req.body, attachments }
   emails.push(newEmail)
   res.status(201)
   res.send(newEmail)
@@ -55,7 +60,7 @@ const emailsRouter = express.Router()
 emailsRouter
   .route("/")
   .get(getEmailsRoute)
-  .post(bodyParser.json(), createEmailRoute)
+  .post(bodyParser.json(), upload.array("attachments"), createEmailRoute)
 
 emailsRouter
   .route("/:id")

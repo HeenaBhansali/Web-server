@@ -12,6 +12,7 @@ const app = express()
 app.use(logger)
 app.use(compress())
 app.use(serveStatic(path.join(__dirname, "./public")))
+app.use("/uploads", serveStatic(path.join(__dirname, "uploads")))
 app.use("/users", usersRouter)
 app.use("/emails", emailsRouter)
 
