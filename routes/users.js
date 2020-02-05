@@ -1,5 +1,6 @@
 const express = require("express")
 const users = require("../fixtures/users")
+const requireAuth = require("../lib/require-auth")
 
 const getUsersRoute = (req, res) => {
   res.send(users)
@@ -12,6 +13,7 @@ const getUserRoute = (req, res) => {
 
 const usersRouter = express.Router()
 
+usersRouter.use(requireAuth)
 usersRouter.get("/", getUsersRoute)
 usersRouter.get("/:id", getUserRoute)
 
